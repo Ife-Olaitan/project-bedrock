@@ -13,6 +13,11 @@ resource "aws_eks_cluster" "main" {
     )
   }
 
+  # Enable API authentication mode for EKS Access Entries
+  access_config {
+    authentication_mode = "API"
+  }
+
   # Control Plane Logging - sends logs to CloudWatch
   enabled_cluster_log_types = [
     "api",               # API server logs
@@ -115,4 +120,24 @@ resource "aws_iam_role_policy_attachment" "eks_cni_policy" {
 resource "aws_iam_role_policy_attachment" "eks_ecr_policy" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
   role       = aws_iam_role.eks_nodes.name
+}
+
+
+# Grant cluster admin access to the current user
+resource "aws_eks_access_entry" "admin" {
+  cluster_name  = aws_eks_cluster.main.name
+  principal_arn = var.account_arn
+  type          = "STANDARD"
+}
+
+resource "aws_eks_access_policy_association" "admin" {
+  cluster_name  = aws_eks_cluster.main.name
+  principal_arn = var.account_arn
+  policy_arn    = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+
+  access_scope {
+    type = "cluster"
+  }
+
+  depends_on = [aws_eks_access_entry.admin]
 }
