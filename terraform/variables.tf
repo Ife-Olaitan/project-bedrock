@@ -30,3 +30,13 @@ variable "cluster_version" {
   description = "EKS cluster Kubernetes version"
   type        = string
 }
+
+# S3
+variable "student_id" {
+  description = "Student ID for unique bucket naming"
+  type        = string
+}
+
+variable "account_arn" {
+  type = string
+}
