@@ -1,0 +1,23 @@
+# Orders service - uses external RDS PostgreSQL
+postgresql:
+  create: false
+
+rabbitmq:
+  create: true
+
+# Enable PostgreSQL profile (required to use external PostgreSQL)
+env:
+  - name: SPRING_PROFILES_ACTIVE
+    value: postgresql
+
+app:
+  persistence:
+    provider: postgresql
+    # endpoint is set via --set in deploy script (needs Terraform output)
+    database: orders_db
+    secret:
+      create: false
+      name: orders-db-credentials
+
+  messaging:
+    provider: rabbitmq

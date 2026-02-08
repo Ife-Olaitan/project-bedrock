@@ -1,0 +1,13 @@
+# Catalog service - uses external RDS MySQL
+mysql:
+  # Don't create in-cluster MySQL
+  create: false
+
+app:
+  persistence:
+    provider: mysql
+    # endpoint is set via --set in deploy script (needs Terraform output)
+    database: catalog_db
+    secret:
+      create: false  # Use ESO-managed secret
+      name: catalog-db-credentials
