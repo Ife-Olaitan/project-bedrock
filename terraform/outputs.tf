@@ -36,3 +36,26 @@ output "dev_user_secret_access_key" {
   value       = aws_iam_access_key.dev_view.secret
   sensitive   = true
 }
+
+# RDS
+output "catalog_mysql_endpoint" {
+  description = "Catalog MySQL RDS endpoint"
+  value       = aws_db_instance.catalog_mysql.endpoint
+}
+
+output "orders_postgres_endpoint" {
+  description = "Orders PostgreSQL RDS endpoint"
+  value       = aws_db_instance.orders_postgres.endpoint
+}
+
+# ESO (External Secrets Operator)
+output "eso_role_arn" {
+  description = "IAM role ARN for External Secrets Operator"
+  value       = aws_iam_role.eso.arn
+}
+
+# # ALB Controller
+# output "alb_controller_role_arn" {
+#   description = "IAM role ARN for AWS Load Balancer Controller"
+#   value       = aws_iam_role.alb_controller.arn
+# }

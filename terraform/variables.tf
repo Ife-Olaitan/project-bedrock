@@ -40,3 +40,26 @@ variable "student_id" {
 variable "account_arn" {
   type = string
 }
+
+# RDS
+variable "catalog_db_username" {
+  description = "Username for catalog MySQL database"
+  type        = string
+}
+
+variable "catalog_db_password" {
+  description = "Password for catalog MySQL database"
+  type        = string
+  sensitive   = true
+}
+
+variable "orders_db_username" {
+  description = "Username for orders PostgreSQL database"
+  type        = string
+}
+
+variable "orders_db_password" {
+  description = "Password for orders PostgreSQL database"
+  type        = string
+  sensitive   = true
+}

@@ -141,3 +141,15 @@ resource "aws_eks_access_policy_association" "admin" {
 
   depends_on = [aws_eks_access_entry.admin]
 }
+
+# Get TLS certificate from EKS OIDC issuer URL (needed for thumbprint validation)
+data "tls_certificate" "eks" {
+  url = aws_eks_cluster.main.identity[0].oidc[0].issuer
+}
+
+# Register EKS OIDC provider with IAM (allows pods to assume IAM roles via service accounts)
+resource "aws_iam_openid_connect_provider" "eks" {
+  client_id_list  = ["sts.amazonaws.com"]
+  thumbprint_list = [data.tls_certificate.eks.certificates[0].sha1_fingerprint]
+  url             = aws_eks_cluster.main.identity[0].oidc[0].issuer
+}
