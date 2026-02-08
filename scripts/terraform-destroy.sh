@@ -23,4 +23,8 @@ fi
 echo "=== Destroying infrastructure ==="
 terraform destroy
 
+echo "=== Force Delete Secret Managers ==="
+aws secretsmanager delete-secret --secret-id project-bedrock-catalog-db-credentials --force-delete-without-recovery --region us-east-1
+aws secretsmanager delete-secret --secret-id project-bedrock-orders-db-credentials --force-delete-without-recovery --region us-east-1
+
 echo "=== Terraform destroy complete ==="
