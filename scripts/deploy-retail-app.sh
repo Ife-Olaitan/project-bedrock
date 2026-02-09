@@ -1,7 +1,7 @@
 #!/bin/bash
 # Deploys the retail store application to EKS using Helm
 
-set -e  # Exit on any error
+set -e
 
 NAMESPACE="retail-app"
 CHART_VERSION="1.4.0"
