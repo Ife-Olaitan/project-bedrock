@@ -63,3 +63,9 @@ variable "orders_db_password" {
   type        = string
   sensitive   = true
 }
+
+# Domain
+variable "domain_name" {
+  description = "Domain name for the application"
+  type        = string
+}

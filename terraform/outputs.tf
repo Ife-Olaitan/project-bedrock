@@ -54,8 +54,25 @@ output "eso_role_arn" {
   value       = aws_iam_role.eso.arn
 }
 
-# # ALB Controller
-# output "alb_controller_role_arn" {
-#   description = "IAM role ARN for AWS Load Balancer Controller"
-#   value       = aws_iam_role.alb_controller.arn
-# }
+# ALB Controller
+output "alb_controller_role_arn" {
+  description = "IAM role ARN for AWS Load Balancer Controller"
+  value       = aws_iam_role.alb_controller.arn
+}
+
+# ACM
+output "acm_validation_record" {
+  description = "CNAME record to add in Porkbun to validate the certificate"
+  value = {
+    for dvo in aws_acm_certificate.main.domain_validation_options : dvo.domain_name => {
+      name  = dvo.resource_record_name
+      type  = dvo.resource_record_type
+      value = dvo.resource_record_value
+    }
+  }
+}
+
+output "acm_certificate_arn" {
+  description = "ACM certificate ARN for ALB"
+  value       = aws_acm_certificate.main.arn
+}
