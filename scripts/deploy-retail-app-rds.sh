@@ -9,6 +9,20 @@ CHART_VERSION="1.4.0"
 REGISTRY="oci://public.ecr.aws/aws-containers"
 SCRIPT_DIR="$(dirname "$0")"
 VALUES_DIR="$SCRIPT_DIR/../kubernetes"
+CHARTS_DIR="/tmp/helm-charts"
+
+# Pull all charts
+echo "=== Pulling Helm charts ==="
+mkdir -p $CHARTS_DIR
+cd $CHARTS_DIR
+
+for chart in catalog cart orders checkout ui; do
+  echo "Pulling retail-store-sample-${chart}-chart:$CHART_VERSION"
+  helm pull $REGISTRY/retail-store-sample-${chart}-chart --version $CHART_VERSION
+done
+
+cd - > /dev/null
+echo "Charts downloaded to $CHARTS_DIR"
 
 # Get RDS endpoints from Terraform
 echo "=== Getting RDS endpoints from Terraform ==="
@@ -33,21 +47,21 @@ echo "Secrets verified!"
 
 # Deploy services
 echo "=== Deploying Catalog (MySQL RDS) ==="
-helm upgrade --install catalog $REGISTRY/retail-store-sample-catalog-chart:$CHART_VERSION \
+helm upgrade --install catalog $CHARTS_DIR/retail-store-sample-catalog-chart-$CHART_VERSION.tgz \
   --namespace $NAMESPACE \
   -f $VALUES_DIR/catalog-values.yaml \
   --set app.persistence.endpoint="$CATALOG_ENDPOINT:3306" \
   --wait
 
 echo "=== Deploying Cart (DynamoDB Local) ==="
-helm upgrade --install cart $REGISTRY/retail-store-sample-cart-chart:$CHART_VERSION \
+helm upgrade --install cart $CHARTS_DIR/retail-store-sample-cart-chart-$CHART_VERSION.tgz \
   --namespace $NAMESPACE \
   --set dynamodb.create=true \
   --set app.persistence.provider=dynamodb \
   --wait
 
 echo "=== Deploying Orders (PostgreSQL RDS) ==="
-helm upgrade --install orders $REGISTRY/retail-store-sample-orders-chart:$CHART_VERSION \
+helm upgrade --install orders $CHARTS_DIR/retail-store-sample-orders-chart-$CHART_VERSION.tgz \
   --namespace $NAMESPACE \
   -f $VALUES_DIR/orders-values.yaml \
   --set app.persistence.endpoint="$ORDERS_ENDPOINT:5432"
@@ -79,7 +93,7 @@ kubectl patch deployment orders -n $NAMESPACE --type='json' -p='[{"op": "add", "
 kubectl rollout status deployment/orders -n $NAMESPACE --timeout=120s
 
 echo "=== Deploying Checkout (Redis) ==="
-helm upgrade --install checkout $REGISTRY/retail-store-sample-checkout-chart:$CHART_VERSION \
+helm upgrade --install checkout $CHARTS_DIR/retail-store-sample-checkout-chart-$CHART_VERSION.tgz \
   --namespace $NAMESPACE \
   --set redis.create=true \
   --set app.persistence.provider=redis \
@@ -87,7 +101,7 @@ helm upgrade --install checkout $REGISTRY/retail-store-sample-checkout-chart:$CH
   --wait
 
 echo "=== Deploying UI ==="
-helm upgrade --install ui $REGISTRY/retail-store-sample-ui-chart:$CHART_VERSION \
+helm upgrade --install ui $CHARTS_DIR/retail-store-sample-ui-chart-$CHART_VERSION.tgz \
   --namespace $NAMESPACE \
   --set app.endpoints.catalog=http://catalog:80 \
   --set app.endpoints.carts=http://cart-carts:80 \
