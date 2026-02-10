@@ -27,7 +27,7 @@ helm repo update
 
 echo ""
 echo "=== Installing AWS Load Balancer Controller ==="
-helm install aws-load-balancer-controller eks/aws-load-balancer-controller \
+helm upgrade --install aws-load-balancer-controller eks/aws-load-balancer-controller \
   --namespace kube-system \
   --set clusterName="$CLUSTER_NAME" \
   --set serviceAccount.create=true \

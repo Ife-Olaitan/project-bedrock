@@ -16,7 +16,7 @@ helm repo add external-secrets https://charts.external-secrets.io
 helm repo update
 
 echo "=== Installing External Secrets Operator ==="
-helm install external-secrets external-secrets/external-secrets \
+helm upgrade --install external-secrets external-secrets/external-secrets \
   --namespace external-secrets \
   --create-namespace \
   --set serviceAccount.annotations."eks\.amazonaws\.com/role-arn"="$ESO_ROLE_ARN" \

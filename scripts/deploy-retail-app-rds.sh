@@ -33,21 +33,21 @@ echo "Secrets verified!"
 
 # Deploy services
 echo "=== Deploying Catalog (MySQL RDS) ==="
-helm install catalog $REGISTRY/retail-store-sample-catalog-chart:$CHART_VERSION \
+helm upgrade --install catalog $REGISTRY/retail-store-sample-catalog-chart:$CHART_VERSION \
   --namespace $NAMESPACE \
   -f $VALUES_DIR/catalog-values.yaml \
   --set app.persistence.endpoint="$CATALOG_ENDPOINT:3306" \
   --wait
 
 echo "=== Deploying Cart (DynamoDB Local) ==="
-helm install cart $REGISTRY/retail-store-sample-cart-chart:$CHART_VERSION \
+helm upgrade --install cart $REGISTRY/retail-store-sample-cart-chart:$CHART_VERSION \
   --namespace $NAMESPACE \
   --set dynamodb.create=true \
   --set app.persistence.provider=dynamodb \
   --wait
 
 echo "=== Deploying Orders (PostgreSQL RDS) ==="
-helm install orders $REGISTRY/retail-store-sample-orders-chart:$CHART_VERSION \
+helm upgrade --install orders $REGISTRY/retail-store-sample-orders-chart:$CHART_VERSION \
   --namespace $NAMESPACE \
   -f $VALUES_DIR/orders-values.yaml \
   --set app.persistence.endpoint="$ORDERS_ENDPOINT:5432"
@@ -79,7 +79,7 @@ kubectl patch deployment orders -n $NAMESPACE --type='json' -p='[{"op": "add", "
 kubectl rollout status deployment/orders -n $NAMESPACE --timeout=120s
 
 echo "=== Deploying Checkout (Redis) ==="
-helm install checkout $REGISTRY/retail-store-sample-checkout-chart:$CHART_VERSION \
+helm upgrade --install checkout $REGISTRY/retail-store-sample-checkout-chart:$CHART_VERSION \
   --namespace $NAMESPACE \
   --set redis.create=true \
   --set app.persistence.provider=redis \
@@ -87,7 +87,7 @@ helm install checkout $REGISTRY/retail-store-sample-checkout-chart:$CHART_VERSIO
   --wait
 
 echo "=== Deploying UI ==="
-helm install ui $REGISTRY/retail-store-sample-ui-chart:$CHART_VERSION \
+helm upgrade --install ui $REGISTRY/retail-store-sample-ui-chart:$CHART_VERSION \
   --namespace $NAMESPACE \
   --set app.endpoints.catalog=http://catalog:80 \
   --set app.endpoints.carts=http://cart-carts:80 \
