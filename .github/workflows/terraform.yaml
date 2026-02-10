@@ -6,11 +6,13 @@ on:
       - main
     paths:
       - 'terraform/**'
+      - '.github/workflows/terraform.yaml'
   pull_request:
     branches:
       - main
     paths:
       - 'terraform/**'
+      - '.github/workflows/terraform.yaml'
 
 env:
   AWS_REGION: "us-east-1"
