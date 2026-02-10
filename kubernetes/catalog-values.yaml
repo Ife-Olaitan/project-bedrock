@@ -1,7 +1,6 @@
 # Catalog service - uses external RDS MySQL
 mysql:
-  # Don't create in-cluster MySQL
-  create: false
+  create: false # No in-cluster MySQL
 
 app:
   persistence:

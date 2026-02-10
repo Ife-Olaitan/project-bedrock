@@ -1,6 +1,6 @@
 # Orders service - uses external RDS PostgreSQL
 postgresql:
-  create: false
+  create: false  # No in-cluster PostgreSQL
 
 rabbitmq:
   create: true
