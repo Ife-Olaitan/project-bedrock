@@ -7,11 +7,11 @@ data "archive_file" "lambda" {
 
 # Lambda function
 resource "aws_lambda_function" "asset_processor" {
-  function_name = "bedrock-asset-processor"
-  role          = aws_iam_role.lambda.arn
-  handler       = "index.handler"
-  runtime       = "python3.12"
-  filename      = data.archive_file.lambda.output_path
+  function_name    = "bedrock-asset-processor"
+  role             = aws_iam_role.lambda.arn
+  handler          = "index.handler"
+  runtime          = "python3.12"
+  filename         = data.archive_file.lambda.output_path
   source_code_hash = data.archive_file.lambda.output_base64sha256
 }
 
