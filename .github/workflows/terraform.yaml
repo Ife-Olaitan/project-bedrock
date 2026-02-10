@@ -16,6 +16,14 @@ env:
   AWS_REGION: "us-east-1"
   TF_VERSION: "1.13.3"
   CLUSTER_NAME: "project-bedrock-cluster"
+  CLUSTER_VERSION: "1.34"
+  NAME: "project-bedrock"
+  VPC_CIDR: "10.0.0.0/16"
+  PUBLIC_SUBNET_CIDRS: '["10.0.1.0/24", "10.0.2.0/24"]'
+  PRIVATE_SUBNET_CIDRS: '["10.0.3.0/24", "10.0.4.0/24"]'
+  DOMAIN_NAME: "myprojectbedrock.xyz"
+  STUDENT_ID: "alt-soe-025-1104"
+
 
 permissions:
   id-token: write
@@ -59,11 +67,39 @@ jobs:
       # PR: Plan only
       - name: Terraform Plan
         if: github.event_name == 'pull_request'
+        env:
+          TF_VAR_aws_region: ${{ env.AWS_REGION }}
+          TF_VAR_name: ${{ env.NAME }}
+          TF_VAR_vpc_cidr: ${{ env.VPC_CIDR }}
+          TF_VAR_public_subnet_cidrs: ${{ env.PUBLIC_SUBNET_CIDRS }}
+          TF_VAR_private_subnet_cidrs: ${{ env.PRIVATE_SUBNET_CIDRS }}
+          TF_VAR_cluster_version: ${{ env.CLUSTER_VERSION }}
+          TF_VAR_student_id: ${{ env.STUDENT_ID }}
+          TF_VAR_domain_name: ${{ env.DOMAIN_NAME }}
+          TF_VAR_account_arn: ${{ secrets.TF_VAR_account_arn }}
+          TF_VAR_catalog_db_username: ${{ secrets.TF_VAR_catalog_db_username }}
+          TF_VAR_catalog_db_password: ${{ secrets.TF_VAR_catalog_db_password }}
+          TF_VAR_orders_db_username: ${{ secrets.TF_VAR_orders_db_username }}
+          TF_VAR_orders_db_password: ${{ secrets.TF_VAR_orders_db_password }}
         run: terraform plan
 
       # Merge to main: Apply
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        env:
+          TF_VAR_aws_region: ${{ env.AWS_REGION }}
+          TF_VAR_name: ${{ env.NAME }}
+          TF_VAR_vpc_cidr: ${{ env.VPC_CIDR }}
+          TF_VAR_public_subnet_cidrs: ${{ env.PUBLIC_SUBNET_CIDRS }}
+          TF_VAR_private_subnet_cidrs: ${{ env.PRIVATE_SUBNET_CIDRS }}
+          TF_VAR_cluster_version: ${{ env.CLUSTER_VERSION }}
+          TF_VAR_student_id: ${{ env.STUDENT_ID }}
+          TF_VAR_domain_name: ${{ env.DOMAIN_NAME }}
+          TF_VAR_account_arn: ${{ secrets.TF_VAR_account_arn }}
+          TF_VAR_catalog_db_username: ${{ secrets.TF_VAR_catalog_db_username }}
+          TF_VAR_catalog_db_password: ${{ secrets.TF_VAR_catalog_db_password }}
+          TF_VAR_orders_db_username: ${{ secrets.TF_VAR_orders_db_username }}
+          TF_VAR_orders_db_password: ${{ secrets.TF_VAR_orders_db_password }}
         run: terraform apply -auto-approve
 
   deploy:
