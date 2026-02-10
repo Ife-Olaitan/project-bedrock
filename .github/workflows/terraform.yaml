@@ -144,6 +144,10 @@ jobs:
           chmod +x ./scripts/setup-eso.sh
           ./scripts/setup-eso.sh
 
+      - name: Login to ECR Public
+        run: |
+          aws ecr-public get-login-password --region us-east-1 | helm registry login --username AWS --password-stdin public.ecr.aws
+
       - name: Deploy Retail App
         run: |
           chmod +x ./scripts/deploy-retail-app-rds.sh
