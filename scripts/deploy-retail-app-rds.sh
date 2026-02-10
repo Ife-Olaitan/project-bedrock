@@ -100,15 +100,3 @@ echo ""
 echo "=== Deployment Complete ==="
 echo ""
 kubectl get pods -n $NAMESPACE
-
-echo ""
-echo "=== Starting Port Forwards ==="
-kubectl port-forward svc/ui -n $NAMESPACE 8080:80 &
-kubectl port-forward svc/orders -n $NAMESPACE 8082:80 &
-
-echo ""
-echo "Access the app:"
-echo "  UI:     http://localhost:8080"
-echo "  Orders: http://localhost:8082/orders"
-echo ""
-echo "To stop port-forwards: pkill -f 'port-forward'"

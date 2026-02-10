@@ -51,8 +51,3 @@ helm install ui $REGISTRY/retail-store-sample-ui-chart:$CHART_VERSION \
 
 echo "=== Deployment complete ==="
 kubectl get pods -n $NAMESPACE
-
-echo ""
-echo "To access the app, run:"
-echo "  kubectl port-forward svc/ui -n $NAMESPACE 8080:80"
-echo "Then open: http://localhost:8080"

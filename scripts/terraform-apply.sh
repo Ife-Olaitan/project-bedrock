@@ -1,7 +1,7 @@
 #!/bin/bash
 # Creates all Terraform infrastructure resources
 
-set -e  # Exit on any error
+set -e
 
 STATE_BUCKET="project-bedrock-state-buc"
 AWS_REGION="us-east-1"
@@ -20,7 +20,6 @@ else
   echo "Bucket created successfully"
 fi
 
-# Navigate to terraform folder (assumes script is run from project root)
 cd terraform
 
 echo "=== Initializing Terraform ==="
