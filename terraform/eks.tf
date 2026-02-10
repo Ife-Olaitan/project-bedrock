@@ -43,7 +43,7 @@ resource "aws_eks_node_group" "main" {
   subnet_ids = aws_subnet.private[*].id
 
   # Instance configuration
-  instance_types = ["t3.small"]
+  instance_types = ["t3.medium"]
 
   # Scaling: min, max, and desired number of nodes
   scaling_config {
