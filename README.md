@@ -124,10 +124,3 @@ aws s3 cp test-file.txt s3://project-bedrock-assets/test-file.txt
 # Check Lambda logs in CloudWatch
 aws logs tail /aws/lambda/bedrock-asset-processor --follow
 ```
-
-## Resource Tagging
-
-All resources are tagged with:
-```
-Project: Bedrock
-```
