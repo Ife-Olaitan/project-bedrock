@@ -18,7 +18,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project = "Bedrock"
+      Project = "barakat-2025-capstone"
     }
   }
 }
