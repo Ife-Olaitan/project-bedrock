@@ -69,7 +69,7 @@ echo ""
 if [ -n "$ALB_URL" ]; then
   echo "ALB Hostname: $ALB_URL"
   echo ""
-  echo "=== NEXT STEP: Add CNAME record in Porkbun ==="
+  echo "=== NEXT STEP: Add CNAME to DNS record ==="
   echo "Type:   CNAME"
   echo "Host:   @ (or leave blank for root domain)"
   echo "Answer: $ALB_URL"
