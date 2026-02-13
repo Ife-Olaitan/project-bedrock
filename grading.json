@@ -1,0 +1,88 @@
+{
+  "acm_certificate_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:acm:us-east-1:897722663141:certificate/a5b35413-5629-486d-ad29-e8b6dcd61545"
+  },
+  "acm_validation_record": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "myprojectbedrock.xyz": [
+          "object",
+          {
+            "name": "string",
+            "type": "string",
+            "value": "string"
+          }
+        ],
+        "www.myprojectbedrock.xyz": [
+          "object",
+          {
+            "name": "string",
+            "type": "string",
+            "value": "string"
+          }
+        ]
+      }
+    ],
+    "value": {
+      "myprojectbedrock.xyz": {
+        "name": "_433be23dba8a9f8023bee90493d09607.myprojectbedrock.xyz.",
+        "type": "CNAME",
+        "value": "_f68bb2bb374bab7ed6e75afb63ff9bb6.jkddzztszm.acm-validations.aws."
+      },
+      "www.myprojectbedrock.xyz": {
+        "name": "_77259fdf0c3859420e79441688231174.www.myprojectbedrock.xyz.",
+        "type": "CNAME",
+        "value": "_45e49b24665094614d66b9d038bfc5d1.jkddzztszm.acm-validations.aws."
+      }
+    }
+  },
+  "alb_controller_role_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:iam::897722663141:role/project-bedrock-alb-controller-role"
+  },
+  "assets_bucket_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "bedrock-assets-alt-soe-025-1104"
+  },
+  "catalog_mysql_endpoint": {
+    "sensitive": false,
+    "type": "string",
+    "value": "project-bedrock-catalog-mysql.csbym80c6cpk.us-east-1.rds.amazonaws.com:3306"
+  },
+  "cluster_endpoint": {
+    "sensitive": false,
+    "type": "string",
+    "value": "https://6A15F5C720C0AE1CEEE268C3249F63D8.gr7.us-east-1.eks.amazonaws.com"
+  },
+  "cluster_name": {
+    "sensitive": false,
+    "type": "string",
+    "value": "project-bedrock-cluster"
+  },
+  "eso_role_arn": {
+    "sensitive": false,
+    "type": "string",
+    "value": "arn:aws:iam::897722663141:role/project-bedrock-eso-role"
+  },
+  "orders_postgres_endpoint": {
+    "sensitive": false,
+    "type": "string",
+    "value": "project-bedrock-orders-postgres.csbym80c6cpk.us-east-1.rds.amazonaws.com:5432"
+  },
+  "region": {
+    "sensitive": false,
+    "type": "string",
+    "value": "us-east-1"
+  },
+  "vpc_id": {
+    "sensitive": false,
+    "type": "string",
+    "value": "vpc-012a0203cd7979f98"
+  }
+}
