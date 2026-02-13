@@ -1,19 +1,18 @@
 name: Terraform CI/CD
 
 on:
-  workflow_dispatch:
-#  push:
-#    branches:
-#      - main
-#    paths:
-#      - 'terraform/**'
-#      - '.github/workflows/terraform.yaml'
-#  pull_request:
-#    branches:
-#      - main
-#    paths:
-#      - 'terraform/**'
-#      - '.github/workflows/terraform.yaml'
+  push:
+    branches:
+      - main
+    paths:
+      - 'terraform/**'
+      - '.github/workflows/terraform.yaml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'terraform/**'
+      - '.github/workflows/terraform.yaml'
 
 env:
   AWS_REGION: "us-east-1"

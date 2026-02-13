@@ -1,4 +1,3 @@
-# Providers being used
 terraform {
   required_providers {
     aws = {
@@ -12,7 +11,6 @@ terraform {
   }
 }
 
-# AWS Provider - lets Terraform create AWS resources (VPC, EKS, RDS, S3, etc.)
 provider "aws" {
   region = var.aws_region
 
